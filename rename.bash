@@ -14,4 +14,6 @@
 # done
 # echo "Renaming Completed."
 
-destpath="imagedata"
+destpath="phone_ocr_data"
+cd $destpath
+for 
