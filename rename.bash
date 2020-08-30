@@ -1,19 +1,15 @@
-# #!/usr/bin/bash
-# echo "Renaming files. Process ID $$"
-# srcpath="images"
-# destpath="../imagedata"
+#!/usr/bin/bash
+echo "Renaming files. Process ID $$"
+srcpath="images"
+destpath="../imagedata"
 
-# i=1
-# cd $srcpath
+i=1
+cd $srcpath
 
-# for file in *; 
-# do
-#     echo $file
-#     cp "$file" "$destpath/image$i.jpg"
-#     i=`expr $i + 1`
-# done
-# echo "Renaming Completed."
-
-destpath="phone_ocr_data"
-cd $destpath
-for 
+for file in *; 
+do
+    echo $file
+    cp "$file" "$destpath/image$i.jpg"
+    i=`expr $i + 1`
+done
+echo "Renaming Completed."
