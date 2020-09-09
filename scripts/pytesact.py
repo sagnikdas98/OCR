@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 try:
     from PIL import Image
 except ImportError:
@@ -11,7 +12,7 @@ pytesseract.pytesseract.tesseract_cmd = r'/usr/local/bin/tesseract'
 # Simple image to string
 
 print(pytesseract.image_to_string(Image.open('imagedata/image1.jpg')))
-
+'''
 # French text image to string
 # print(pytesseract.image_to_string(Image.open('test-european.jpg'), lang='fra'))
 
@@ -20,7 +21,7 @@ print(pytesseract.image_to_string(Image.open('imagedata/image1.jpg')))
 print(pytesseract.image_to_string('test.png'))
 
 # Batch processing with a single file containing the list of multiple image file paths
-print(pytesseract.image_to_string('images.txt'))
+# print(pytesseract.image_to_string('imagelist.txt'))
 
 # Timeout/terminate the tesseract job after a period of time
 try:
@@ -46,3 +47,5 @@ with open('test.pdf', 'w+b') as f:
 
 # Get HOCR output
 hocr = pytesseract.image_to_pdf_or_hocr('test.png', extension='hocr')
+
+'''
