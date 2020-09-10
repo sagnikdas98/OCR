@@ -19,14 +19,15 @@ export default class Upload extends React.Component {
 
     handlePages = (e) => {
         
-        this.setState({isFile:true, file:e.target.files, enableUploadButton: true, setOCRWindow: false});
+        this.state = {isFile:true, file:e.target.files, enableUploadButton: true, setOCRWindow: true};
+        this.setState(this.state);
 
     };
 
     handleUploadButton = () =>{
         // let currentFile = this.state.selectedFiles[0]; //
-    
-        this.setState({isFile:true, file:e.target.files, enableUploadButton: true, setOCRWindow: true});
+        this.state.setOCRWindow = true;
+        this.setState(this.state);
     
         // UploadService.upload(currentFile, (event) => {
         //   this.setState({
