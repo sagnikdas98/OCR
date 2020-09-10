@@ -1,68 +1,37 @@
 import React from "react";
 import axios from 'axios'; 
 
-import Button from "react-bootstrap/Button";
-import UploadService from "../services/upload-files.service";
-
-import OCRWindow from "./OCRWindow";
+import Card from "react-bootstrap/Card";
 
 export default class Upload extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
 
-            isFile:false, file:null, fileName:'', enableUploadButton: false, setOCRWindow: false
+            isFile:false, file:null, fileName:'', enableUploadButton: false
 
         };
     }
 
 
-    handlePages = (e) => {
+    handleUpload = (e) => {
         
-        this.state = {isFile:true, file:e.target.files, enableUploadButton: true, setOCRWindow: true};
-        this.setState(this.state);
+        this.setState({isFile:true, file:null, fileName:e.target.files[0], enableUploadButton: true});
 
     };
 
-    handleUploadButton = () =>{
-        // let currentFile = this.state.selectedFiles[0]; //
-        this.state.setOCRWindow = true;
-        this.setState(this.state);
+    handleUploadButton = (e) =>{
+        //Post the state and wait for api reasponse
     
-        // UploadService.upload(currentFile, (event) => {
-        //   this.setState({
-        //     progress: Math.round((100 * event.loaded) / event.total),
-        //   });
-        // })
-        //   .then((response) => {
-        //     this.setState({
-        //       message: response.data.message,
-        //     });
-        //     return UploadService.getFiles();
-        //   })
-        //   .then((files) => {
-        //     this.setState({
-        //       fileInfos: files.data,
-        //     });
-        //   })
-        //   .catch(() => {
-        //     this.setState({
-        //       progress: 0,
-        //       message: "Could not upload the file!",
-        //       currentFile: undefined,
-        //     });
-        //   });
-    
-        // this.setState({
-        //   selectedFiles: undefined,
-        // });
-    }
+        
+
+        
+        
+    };
 
     render() {
         return (
-          this.state.enableUploadButton ? (<OCRWindow />) :
-            
-            (<div id='uploadComponent'>
+            <div id='uploadComponent'>
                 <div className="d-flex justify-content-center">
                     <input
                         type="file"
@@ -76,10 +45,10 @@ export default class Upload extends React.Component {
                     (<button
                         type="button"
                         className=" btn btn-dark"
-                    onClick={this.handleUploadButton}>Run OCR </button>) : 
+                        onClick={this.handleUploadButton}>Run OCR</button>) : 
                         (<></>)}
                 </div>
-            </div>)
+            </div>
         );
     }
 }
