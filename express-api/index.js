@@ -21,8 +21,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 
+//make uploads directory static
+app.use(express.static('../Uploads'));
+
+const port = process.env.PORT || 3000;
+
 // upoad single file
-app.post('/upload-avatar', async (req, res) => {
+
+app.get('/hello', async(req,res) => {res.send({hello: "world"});});
+
+
+
+app.post('/uploadPage', async (req, res) => {
     try {
         if(!req.files) {
             res.send({
@@ -30,20 +40,21 @@ app.post('/upload-avatar', async (req, res) => {
                 message: 'No file uploaded'
             });
         } else {
-            //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
-            let avatar = req.files.avatar;
+            //Use the name of the input field (i.e. "page") to retrieve the uploaded file
+            let page = req.files.page;
             
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
-            avatar.mv('./uploads/' + avatar.name);
+            page.mv('../Uploads/' + page.name);
 
             //send response
             res.send({
                 status: true,
                 message: 'File is uploaded',
                 data: {
-                    name: avatar.name,
-                    mimetype: avatar.mimetype,
-                    size: avatar.size
+                    name: page.name,
+                    mimetype: page.mimetype,
+                    size: page.size,
+                    lang: req.lang
                 }
             });
         }
@@ -52,50 +63,10 @@ app.post('/upload-avatar', async (req, res) => {
     }
 });
 
-// upload multiple files
-app.post('/upload-photos', async (req, res) => {
-    try {
-        if(!req.files) {
-            res.send({
-                status: false,
-                message: 'No file uploaded'
-            });
-        } else {
-            let data = []; 
-    
-            //loop all files
-            _.forEach(_.keysIn(req.files.photos), (key) => {
-                let photo = req.files.photos[key];
-                
-                //move photo to upload directory
-                photo.mv('./uploads/' + photo.name);
 
-                //push file details
-                data.push({
-                    name: photo.name,
-                    mimetype: photo.mimetype,
-                    size: photo.size
-                });
-            });
-    
-            //return response
-            res.send({
-                status: true,
-                message: 'Files are uploaded',
-                data: data
-            });
-        }
-    } catch (err) {
-        res.status(500).send(err);
-    }
-});
 
-//make uploads directory static
-app.use(express.static('uploads'));
 
 //start app 
-const port = process.env.PORT || 3000;
-
 app.listen(port, () => 
   console.log(`App is listening on port ${port}.`)
 );
