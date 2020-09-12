@@ -1,7 +1,7 @@
 import React from "react";
 import axios from 'axios'; 
-
-import Button from "react-bootstrap/Button";
+import PropTypes from 'prop-types';
+import TabReact from "react-bootstrap/Tab";
 import UploadService from "../services/upload-files.service";
 
 
@@ -21,7 +21,7 @@ export default class Tab extends React.Component {
         return (
             
             <div id='TabComponent'>
-                
+                <TabReact/>
             </div>
         );
     }

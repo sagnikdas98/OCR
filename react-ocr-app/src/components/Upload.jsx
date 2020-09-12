@@ -14,50 +14,37 @@ export default class Upload extends React.Component {
     }
 
 
-    handlePages = (e) => {
-        
-        this.setState({isFile:true, files:e.target.files});
+    _handlePages = (e) => {
+
+        this.setState({isFile:true, files: e.target.files});
 
     };
 
-    handleUploadButton = () =>{
+    _handleUploadButton = () =>{
 
         // this.setState({isFile:true, files: this.state.files});
-        this.props.sendFiles(this.state.files);
+        let files = this.state.files;
+        let pdfFiles = [];
+        let imageFiles = [];
+        const acceptedImageTypes = ['image/tiff', 'image/jpeg', 'image/png'];
+        console.log(files);
+        for(let file in files){
+            if(file != undefined){
+                if(acceptedImageTypes.includes(file.type)){
+                    pdfFiles.push(file)
+                }
+                else if(file.type === 'application/pdf'){
+                    imageFiles.push(file)
+                }
+            }
+        }
+
+        let orderedFiles = {pdfFiles: pdfFiles, imageFiles: imageFiles};
+        this.setState({isFile:true, files: orderedFiles});
+        this.props.sendFiles(orderedFiles);
     };
 
-        // let currentFile = this.state.selectedFiles[0]; //
-        //this.state.setOCRWindow =true;
-        // this.setState({isFile:true, file:e.target.files, enableUploadButton: true, setOCRWindow: true});
-        //this.setState(this.state);
-        // UploadService.upload(currentFile, (event) => {
-        //   this.setState({
-        //     progress: Math.round((100 * event.loaded) / event.total),
-        //   });
-        // })
-        //   .then((response) => {
-        //     this.setState({
-        //       message: response.data.message,
-        //     });
-        //     return UploadService.getFiles();
-        //   })
-        //   .then((files) => {
-        //     this.setState({
-        //       fileInfos: files.data,
-        //     });
-        //   })
-        //   .catch(() => {
-        //     this.setState({
-        //       progress: 0,
-        //       message: "Could not upload the file!",
-        //       currentFile: undefined,
-        //     });
-        //   });
-    
-        // this.setState({
-        //   selectedFiles: undefined,
-        // });
-    // };
+        
 
     render() {
         return (
@@ -68,7 +55,9 @@ export default class Upload extends React.Component {
                         type="file"
                         accept="image/*,application/pdf"
                         className="mt-2 btn btn-dark w-75"
-                        onChange={this.handlePages}/>
+                        onChange={this._handlePages}
+                        multiple/>
+                        
                 </div>
                 <br />
                 <div className="d-flex justify-content-center">
@@ -77,7 +66,7 @@ export default class Upload extends React.Component {
                         type="button"
                         className=" btn btn-dark"
                         disabled={!this.state.isFile}
-                        onClick={this.handleUploadButton}>Run OCR </button>) 
+                        onClick={this._handleUploadButton}>Run OCR {this.state.files[0].mozFullPath} </button>) 
                      : (<></>) }
                 </div>
             </div>
