@@ -29,7 +29,7 @@ export default class Upload extends React.Component {
         const acceptedImageTypes = ['image/tiff', 'image/jpeg', 'image/png'];
         console.log(files);
         for(let file in files){
-            if(file != undefined){
+            if(file !== undefined){
                 if(acceptedImageTypes.includes(file.type)){
                     pdfFiles.push(file)
                 }

@@ -1,14 +1,14 @@
 
-// Props:
+// Props: navigatePages(nav{dirn<next,prev,seek>, pgno }), disable{prev, next, image, pdf}, currentPageNo, totalFiles
 // State: 
 
 
 import React from "react";
 import axios from 'axios'; 
 
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import UploadService from "../services/upload-files.service";
+
+import {Button, ButtonGroup, InputGroup, FormControl} from "react-bootstrap";
+
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 
@@ -30,6 +30,9 @@ export default class ToolBar extends React.Component {
         console.log("uyuyuy");
     };
 
+    _prev = () => {this.props.navigatePages({dirn:"prev"})};
+    _next = () => {this.props.navigatePages({dirn:"next"})};
+
     render() {
         return (
             
@@ -41,7 +44,7 @@ export default class ToolBar extends React.Component {
                 > */}
                     <SideNav>
                         <SideNav.Toggle />
-                        
+
                         <SideNav.Nav defaultSelected="home" onSelect={this._onSelect}>
 
                             <NavItem eventKey="new" componentClass='ButtonGroup'>
@@ -75,13 +78,29 @@ export default class ToolBar extends React.Component {
                         </SideNav.Nav>
 
                         <SideNav.Nav expanded = 'false'>
-                        {/* <NavItem eventKey="next"> */}
-                                {/* <NavIcon><i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} /></NavIcon>
-                                <NavText>Next</NavText> */}
-                                <ButtonGroup aria-label="Basic example">
-                                    <Button variant="primary">Prev</Button>
-                                    <Button variant="secondary">Next</Button>
+                            {/* <NavItem eventKey="prev_next"> */}
+                            <div className="d-flex justify-content-right">
+                            
+                                <InputGroup className="mb-3" size="sm" >
+                                <InputGroup.Prepend>
+                                    <FormControl
+                                    placeholder={this.props.currentPageNo}
+                                    aria-label="Recipient's username"
+                                    aria-describedby="basic-addon2"
+                                    type="number"
+                                    min="1" max="5"
+                                    />
+                            </InputGroup.Prepend>
+                                    <InputGroup.Append>
+                                        <InputGroup.Text  id="basic-addon1" size="sm">{'/'+this.props.totalFiles}</InputGroup.Text>
+                                    </InputGroup.Append>
+                                </InputGroup>
+                                <Button variant="outline-dark" size="sm">Seek</Button>
+                                <ButtonGroup aria-label="Basic example" vertical size="sm" >
+                                    <Button variant="dark" onclick={this._prev} block disabled={this.props.disable.prev}>Prev</Button>
+                                    <Button variant="dark" onclick={this._next} block disabled={this.props.disable.next}>Next</Button>
                                 </ButtonGroup>
+                                </div>
                             {/* </NavItem> */}
                         </SideNav.Nav>
 

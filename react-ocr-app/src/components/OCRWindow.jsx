@@ -1,3 +1,8 @@
+//props:
+//state: isFile, files, setToolBar,setPreUpload, currentFile, disable
+
+
+
 import React from "react";
 import axios from 'axios'; 
 // import { Document, Outline, Page } from 'react-pdf';
@@ -19,7 +24,7 @@ export default class OCRWindow extends React.Component {
         super(props);
         this.state = {
 
-            isFile:false, files:null, setToogler: false, setPreUpload: true, currentFile: null,
+            isFile:false, files:null, setToolBar: false, setPreUpload: true, currentFile: null, disable:{prev: true, next: true, image: true, pdf: true}
 
 
         };
@@ -40,9 +45,7 @@ export default class OCRWindow extends React.Component {
             enablePdfButton = true;
             //convert pdf to array of pages TODO
             // let pdfPageList = [];
-            // for(let pdf in orderedfFiles.pdfFiles){
-                
-            // }
+            // for(let pdf in orderedfFiles.pdfFiles){}
 
             currFile = {page: orderedfFiles.pdfFiles[0], type: 'pdf', index: 0};
         }
@@ -58,21 +61,21 @@ export default class OCRWindow extends React.Component {
         this.setState({isFile:true, files:this.state.files, setToogler: true, setPreUpload: !this.state.setPreUpload, currentFile: this.currentFile}); 
     };
 
-    // _navigatePages = (nav) =>{
-    //     let curPage = this.state.currentFile;
+    _navigatePages = (nav) =>{
+        let curPage = this.state.currentFile;
         
-    //     if (nav.dirn == "next" ){
-    //         if (currentFileNo != 0){
+        if (nav.dirn == "next" ){
+            if (curPage.index != 0){
 
-    //         }
-    //     }
-    //     else if(nav.dirn == "previous" ){
-    //         if (currentFileNo != 0){
+            }
+        }
+        else if(nav.dirn == "previous" ){
+            if (curPage.index  != 0){
                 
-    //         }
-    //     }
+            }
+        }
 
-    // };
+    };
 
 
 
@@ -83,7 +86,7 @@ export default class OCRWindow extends React.Component {
             <div id='OCRWindowComponent'>
                 {!this.state.setToogler?
                     (<div id="ToolBar" className="d-flex justify-content-left">
-                    <ToolBar/>
+                    <ToolBar navigatePages={this._navigatePages} disable={this.state.disable} totalFiles={5}/>
                     </div>):(<></>) }
 
 
@@ -95,8 +98,8 @@ export default class OCRWindow extends React.Component {
 
                 </div>):
                 (<div id='postUpload'> 
-                    <div id="OCRViewer" className="d-flex justify-content-center">
-                        <OCRViewer page={this.state.currentFile} navigatePages={this._navigatePages} />
+                    <div id="OCRViewer" className="d-flex justify-content-right">
+                        <OCRViewer page={this.state.currentFile}  />
                     </div>
                 </div>)}
             </div>
