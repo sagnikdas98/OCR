@@ -1,4 +1,5 @@
 {
-    "image_path": "data/pdf_data/image_raw/d600a5ce-7662-4e6d-82da-22bee2ce8f1f-4.jpg",
-    "image_path2": "data/image_data/image_raw/image3.jpg"
+    "image_path": "data/pdf_data/image_raw/99b8cdc4-ba01-4c55-9c60-e6afb34fd7ce-1.jpg",
+    "image_path2": "data/image_data/image_raw/image3.jpg",
+    "dest_path": "data/output_image/preprocessed_images/dest_image.png"
 }
